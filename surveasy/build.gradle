@@ -44,5 +44,5 @@ test.onlyIf {
 }
 
 bootJar {
-    mainClass = 'com.surveasy.SurveasyApplication'
+    mainClass = 'com.surveasy.surveasy.SurveasyApplication'
 }
