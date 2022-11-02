@@ -1,32 +1,34 @@
 package com.surveasy.surveasy.model;
 
+import com.surveasy.surveasy.domain.interview.IdentityStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
 public class Interview {
 
     @Id @GeneratedValue
+    @Column(name = "interview_nid")
     private Long nid;
     private Long id;    // lastCheckedId
 //    private String uploader;
-//    private Integer progress;
-//
+    private Integer progress;
+
 //    private String dueDate;
 //    private String dueTime;
 //    private Integer spentTime;
 //    private Boolean type;
 //    private Integer typeOnline;
 //    private String typeInput;
-//    private Integer requirementHeadCount;
-//    private Integer targetingGender;
+    private Integer requirementHeadCount;
+    private Integer targetingGender;
 //    private Integer targetingAge;
-//
+
 //    private String requirementOne;
 //    private String requirementTwo;
 //    private String requirementThree;
@@ -44,7 +46,11 @@ public class Interview {
 //    private String etcRequirement;
 //    private String duration;
 //    private Boolean scheduleType;
+
     private Integer price;
-//    private String accountOwner;
+    private String accountOwner;
+
+    @OneToMany(mappedBy = "interview")
+    private List<InterviewItem> items = new ArrayList<>();
 
 }

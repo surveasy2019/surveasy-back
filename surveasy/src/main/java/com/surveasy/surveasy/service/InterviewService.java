@@ -20,17 +20,22 @@ public class InterviewService {
     public Long save(Interview interview) {
         interviewRepository.save(interview);
 
-        return interview.getId();
+        return interview.getNid();
     }
 
-    // 1개 조회
+    // 인터뷰 전체 조회
+    public List<Interview> findAll() {
+        return interviewRepository.findAll();
+    }
+
+    // 인터뷰 1개 조회
     public Interview findOne(Long nid) {
         return interviewRepository.findOne(nid);
     }
 
 
-    // 전체 조회
-    public List<Interview> findAll() {
-        return interviewRepository.findAll();
-    }
+//    // 인터뷰 1개 progress 변경
+//    public Interview changeProgress(Long nid, Integer p) {
+//        return interviewRepository.changeProgress(nid, p);
+//    }
 }

@@ -14,18 +14,18 @@ public class InterviewForm {
 //    private Boolean type;
 //    private Integer typeOnline;
 //    private String typeInput;
-//    private Integer requirementHeadCount;
-//    private Integer targetingGender;
+    private Integer requirementHeadCount;
+    private Integer targetingGender;
 //    private Integer targetingAge;
-//
+
 //    private String requirementOne;
 //    private String requirementTwo;
 //    private String requirementThree;
-//
+
 //    private String preferenceOne;
 //    private String preferenceTwo;
 //    private String preferenceThree;
-//
+
 //    private Integer identity;
 //    private Integer priceOriginal;
 
@@ -35,8 +35,9 @@ public class InterviewForm {
 //    private String etcRequirement;
 //    private String duration;
 //    private Boolean scheduleType;
+
     private Integer price;
-//    private String accountOwner;
+    private String accountOwner;
 
 
 }
