@@ -1,12 +1,14 @@
 package com.surveasy.surveasy.service;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 @Service
 public class OAuthService {
@@ -67,6 +69,69 @@ public class OAuthService {
         }
 
         return access_Token;
+    }
+
+
+    public HashMap<String, Object> createKakaoUser(String token) {
+
+        HashMap<String, Object> userInfo = new HashMap<String, Object>();
+        String reqURL = "https://kapi.kakao.com/v2/user/me";
+
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Authorization", "Bearer " + token);  // header 작성, access token 전달
+
+            // 결과 코드가 200이면 성공
+            int responseCode = conn.getResponseCode();
+            System.out.println("response CODE : " + responseCode);
+
+            // 요청을 통해 얻은 JSON 타입의 Response 데이터 읽어오기
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
+
+            while((line = bufferedReader.readLine()) != null) {
+                result += line;
+            }
+            System.out.println("response BODY : " + result);
+
+            // GSON 라이브러리로 JSON 파싱
+            JsonParser jsonParser = new JsonParser();
+            JsonElement jsonElement = jsonParser.parse(result);
+
+            JsonObject properties = jsonElement.getAsJsonObject().get("properties").getAsJsonObject();
+            JsonObject kakao_account = jsonElement.getAsJsonObject().get("kakao_account").getAsJsonObject();
+
+
+            int id = jsonElement.getAsJsonObject().get("id").getAsInt();
+            boolean hasEmail = kakao_account.get("has_email").getAsBoolean();
+
+            String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+            userInfo.put("nickname", nickname);
+
+            String email = "";
+            if(hasEmail) {
+                email = kakao_account.get("email").getAsString();
+                userInfo.put("email", email);
+            }
+
+
+            System.out.println("id : " + id);
+            System.out.println("email : " + email);
+            System.out.println("nickname : " + nickname);
+
+            bufferedReader.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return userInfo;
     }
 
 }
